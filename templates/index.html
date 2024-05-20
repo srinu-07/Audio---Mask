@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Mask</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('/static/j.jpg'); /* Path to your background image */
+      background-size: cover;
+      background-position: center;
+      color: #a52222; /* Text color */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh; /* Full viewport height */
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    button {
+      background-color: #5863c6; /* Green */
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #encryptForm, #decryptForm {
+      width: 50%;
+      margin: 0 auto;
+      background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+      padding: 20px;
+      border-radius: 10px;
+      display: none; /* Hide forms by default */
+    }
+
+    input[type="file"], input[type="text"] {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    input[type="file"] {
+      background-color: #e2ddec; /* White background for file input */
+    }
+
+    input[type="text"]::placeholder {
+      color: #0d061c; /* Placeholder text color */
+    }
+
+    #goBackButton {
+      display: none; /* Hide go back button by default */
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Audio Mask</h1>
+  <div>
+    <button id="encryptButton">Encrypt Audio</button>
+    <button id="decryptButton">Decrypt Audio</button>
+  </div>
+
+  <div id="encryptForm">
+    <h2>Encrypt Audio File</h2>
+    <form action="/encrypt" method="POST" enctype="multipart/form-data">
+      <input type="file" name="input_file" accept=".mp3,.opus,.ogg" required><br>
+      <input type="text" name="secret_key" placeholder="Enter secret key" required><br>
+      <button type="submit">Encrypt</button>
+    </form>
+  </div>
+
+  <div id="decryptForm">
+    <h2>Decrypt Encrypted Audio File</h2>
+    <form action="/decrypt" method="POST" enctype="multipart/form-data">
+      <input type="file" name="input_file" accept=".mp3,.opus,.ogg" required><br>
+      <input type="text" name="secret_key" placeholder="Enter secret key" required><br>
+      <button type="submit">Decrypt</button>
+    </form>
+  </div>
+
+  <button id="goBackButton" onclick="goBack()">Go Back</button>
+
+  <script>
+    const encryptButton = document.getElementById("encryptButton");
+    const decryptButton = document.getElementById("decryptButton");
+    const encryptForm = document.getElementById("encryptForm");
+    const decryptForm = document.getElementById("decryptForm");
+    const goBackButton = document.getElementById("goBackButton");
+
+    encryptButton.addEventListener("click", () => {
+      encryptForm.style.display = "block";
+      decryptForm.style.display = "none";
+      encryptButton.style.display = "none";
+      decryptButton.style.display = "none";
+      goBackButton.style.display = "block";
+    });
+
+    decryptButton.addEventListener("click", () => {
+      encryptForm.style.display = "none";
+      decryptForm.style.display = "block";
+      encryptButton.style.display = "none";
+      decryptButton.style.display = "none";
+      goBackButton.style.display = "block";
+    });
+
+    function goBack() {
+      encryptForm.style.display = "none";
+      decryptForm.style.display = "none";
+      encryptButton.style.display = "inline-block";
+      decryptButton.style.display = "inline-block";
+      goBackButton.style.display = "none";
+    }
+  </script>
+</body>
+</html>
